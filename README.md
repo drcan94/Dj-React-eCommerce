@@ -19,3 +19,15 @@ Navbar -> bg="dark" variant="dark" expand="lg" collapseOnSelect
 <!-- npm install react-router-dom react-router-bootstrap -->
 <!-- import { BrowserRouter as Router, Route } from 'react-router-dom' -->
 <!-- change the "div" in the App to "Router" -->
+
+### Creating Backend
+##### pip install virtualenv
+##### virtualenv myenv
+
+##### pip install djangorest framework 
+##### api_view decorators is used
+
+##### npm install axios
+
+<!-- add "proxy": "<django backend url>" to package.json -->
+<!-- drawsql.app site is useful :) -->
