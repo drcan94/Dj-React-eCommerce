@@ -37,3 +37,6 @@ Navbar -> bg="dark" variant="dark" expand="lg" collapseOnSelect
 <!-- CONSTANT -> REDUCER -> STORE -> ACTIONS -> SCREEN -->
 <!-- CONSTANT -> REDUCER -> STORE -> ACTIONS -> STORE (LS'den veri alırken) -> SCREEN --> 
 
+### JSON Web Token - JWT installation
+##### pip install djangorestframework-simplejwt
+<!-- "Authorization" and "Bearer <accessToken>" for Headers at POSTMAN or MODHEADER and send request user profile-->
