@@ -31,3 +31,9 @@ Navbar -> bg="dark" variant="dark" expand="lg" collapseOnSelect
 
 <!-- add "proxy": "<django backend url>" to package.json -->
 <!-- drawsql.app site is useful :) -->
+<!-- add to chrome redux dev tools and open redux tab at inspect section -->
+<!-- npm install redux react-redux redux-thunk redux-devtools-extension-->
+
+<!-- CONSTANT -> REDUCER -> STORE -> ACTIONS -> SCREEN -->
+<!-- CONSTANT -> REDUCER -> STORE -> ACTIONS -> STORE (LS'den veri alırken) -> SCREEN --> 
+

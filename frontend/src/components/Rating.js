@@ -33,6 +33,7 @@ function Rating({ value, text, color }) {
                 }>
                 </i>
             </span>
+            <br/>
             <span>{text && text}</span>
             {/* that means, if text exists then type  */}
         </div>
