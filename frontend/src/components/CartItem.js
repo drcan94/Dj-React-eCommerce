@@ -17,7 +17,7 @@ function CartItem() {
     }
 
     const checkOutHandler = () => {
-        navigate("/login?redirect=shipping")
+        navigate("/login?redirect=/shipping")
     }
     return (
         <Row>
@@ -36,7 +36,7 @@ function CartItem() {
                                         <Image src={item.image} alt={item.name} fluid rounded />
                                     </Col>
                                     <Col md={3}>
-                                        <Link to={`/products/${item.product}`}>
+                                        <Link to={`/product/${item.product}`}>
                                             {item.name}
                                         </Link>
                                     </Col>

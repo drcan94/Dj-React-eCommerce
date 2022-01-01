@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
@@ -6,6 +6,8 @@ import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProductDetails } from '../actions/productActions'
+import { addToCart } from '../actions/cartActions'
+import { isInCart } from '../helper'
 
 function ProductScreen() {
 
@@ -16,6 +18,9 @@ function ProductScreen() {
     let productDetails = useSelector(state => state.productDetails)
     const { error, loading, product } = productDetails
 
+    const cart = useSelector(state => state.cart)
+    let { cartItems } = cart
+
     const { id } = useParams();
 
 
@@ -24,7 +29,10 @@ function ProductScreen() {
     }, [dispatch, id])
 
     const addToCartHandler = () => {
-        navigate(`/cart/${id}?qty=${qty}`)
+        if (id) {
+            dispatch(addToCart(id, Number(qty)))
+        }
+        navigate('/cart')
     }
 
     return (
@@ -106,14 +114,25 @@ function ProductScreen() {
                                         )}
 
                                         <ListGroup.Item>
-                                            <Button
-                                                onClick={addToCartHandler}
-                                                className='btn-block'
-                                                disabled={product.countInStock === 0}
-                                                type='button'>
-                                                Add to Cart
-                                            </Button>
+                                            {isInCart(product, cartItems) ?
+                                                <Button
+                                                    onClick={() => navigate('/cart')}
+                                                    className='btn-block'
+                                                    type='button'>
+                                                    Go to Cart
+                                                </Button>
+                                                :
+                                                <Button
+                                                    onClick={addToCartHandler}
+                                                    className='btn-block'
+                                                    disabled={product.countInStock === 0}
+                                                    type='button'>
+                                                    Add to Cart
+                                                </Button>
+                                            }
                                         </ListGroup.Item>
+
+
                                     </ListGroup>
                                 </Card>
                             </Col>
