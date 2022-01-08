@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button, Form, FormGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../actions/cartActions'
 
 function ShippingScreen() {
@@ -21,9 +22,9 @@ function ShippingScreen() {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [navigate])
+    // }, [navigate])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -34,6 +35,7 @@ function ShippingScreen() {
 
     return (
         <FormContainer>
+            <CheckoutSteps step1 />
             <h1>Shipping</h1>
             <Form
                 onSubmit={submitHandler}

@@ -42,3 +42,5 @@ Navbar -> bg="dark" variant="dark" expand="lg" collapseOnSelect
 <!-- "Authorization" and "Bearer <accessToken>" for Headers at POSTMAN or MODHEADER and send request user profile-->
 
 <!-- Code cleaning up at views and urls -->
+
+<!-- npm install react-paypal-button-v2 -->

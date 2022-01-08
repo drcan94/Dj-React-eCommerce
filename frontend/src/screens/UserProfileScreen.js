@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Row, Col, Button, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { Row, Col, Button, Form, Table } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import FormContainer from '../components/FormContainer'
 import { getUserProfile, updateUserProfile } from '../actions/userActions'
+import { getListMyOrders } from '../actions/orderActions'
 
-import { USER_PROFILE_UPDATE_RESET} from '../constants/userConstants'
+import { USER_PROFILE_UPDATE_RESET } from '../constants/userConstants'
 
 function UserProfileScreen() {
     const [name, setName] = useState('')
@@ -28,23 +29,27 @@ function UserProfileScreen() {
     const userUpdateProfile = useSelector(state => state.userProfileUpdate)
     const { success } = userUpdateProfile
 
+    const orderList = useSelector(state => state.orderListMy)
+    const { loading: loadingOrders, error: errorOrders, orders } = orderList
+
     useEffect(() => {
         if (!userInfo) {
             navigate("/login")
 
         } else {
-            if (!user || !user.name || success) {
+            if (!user || !user.name || success || userInfo._id !== user._id) {
                 dispatch({
-                    type:USER_PROFILE_UPDATE_RESET
+                    type: USER_PROFILE_UPDATE_RESET
                 })
                 dispatch(getUserProfile('profile'))
+                dispatch(getListMyOrders())
 
             } else {
                 setName(user.name)
                 setEmail(user.email)
             }
         }
-    }, [dispatch, navigate, userInfo, user, success])
+    }, [dispatch, navigate, userInfo, user, success, orders])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -147,6 +152,50 @@ function UserProfileScreen() {
             </Col>
             <Col md={9}>
                 <h2>Orders</h2>
+                {
+                    loadingOrders ? (
+                        <Loader />
+                    ) : errorOrders ? (
+                        <Message variant='danger'>{errorOrders}</Message>
+                    ) : orders.length > 0 ? (
+                        <Table striped responsive className='table-sm'>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Paid</th>
+                                    <th>Delivered</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {orders.map(order => (
+                                    <tr key={order._id}>
+                                        <td>{order._id}</td>
+                                        <td>{order.createdAt.substring(0, 10)}</td>
+                                        <td>${order.totalPrice}</td>
+                                        <td>{order.isPaid ? `Paid at ${order.paidAt.substring(0, 10)}` : (
+                                            <i className='fas fa-times' style={{ color: 'red' }}></i>
+                                        )}</td>
+                                        <td>{order.isDelivered ? `Delivered ad ${order.deliveredAt.substring(0, 10)}` : (
+                                            <i className='fas fa-times' style={{ color: 'red' }}></i>
+                                        )}</td>
+                                        <td>
+                                            <LinkContainer
+                                                to={`/order/${order._id}/`}
+                                            >
+                                                <Button>Details</Button>
+                                            </LinkContainer>
+                                        </td>
+                                    </tr>
+                                ))}
+
+                            </tbody>
+                        </Table>
+                    ) : ("")
+                }
             </Col>
         </Row>
     )
